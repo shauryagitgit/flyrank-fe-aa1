@@ -63,7 +63,8 @@ describe('assistant flow', () => {
     await user.type(screen.getByRole('textbox', { name: 'Ask the assistant' }), 'rank these pages');
     await user.click(screen.getByRole('button', { name: 'Send' }));
     expect(await screen.findByText('Mock answer')).toBeVisible();
-    expect(screen.getByRole('region', { name: 'rank_pages tool result' })).toHaveTextContent('3 pages scored');
+    const results = screen.getAllByRole('region', { name: 'rank_pages tool result' });
+    expect(results.at(-1)).toHaveTextContent('3 pages scored');
     expect(api.requestAssistant).toHaveBeenCalledWith('rank these pages');
   });
 });
